@@ -1,0 +1,10 @@
+# Python Bytecode
+__pycache__/
+*.pyc
+
+# Django
+*.log
+*.sqlite3
+
+# Venv
+venv/
