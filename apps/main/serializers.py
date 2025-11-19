@@ -27,14 +27,14 @@ class PostListSerializer(serializers.ModelSerializer):
     category = serializers.StringRelatedField()
     comments_count = serializers.ReadOnlyField()
     is_pinned = serializers.ReadOnlyField()
-    pinned_info = serializers.SerializerMethodField()
+    #pinned_info = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
         fields = [
             'id', 'title', 'slug', 'content', 'image', 'category',
             'author', 'status', 'created_at', 'updated_at',
-            'views_count', 'comments_count', 'is_pinned', 'pinned_info'
+            'views_count', 'comments_count', 'is_pinned',
         ]
         read_only_fields = ['slug', 'author', 'views_count']
         
@@ -50,9 +50,9 @@ class PostDetailSerializer(serializers.ModelSerializer):
     author_info = serializers.SerializerMethodField()
     category_info = serializers.SerializerMethodField()
     comments_count = serializers.ReadOnlyField()
-    is_pinned = serializers.ReadOnlyField()
-    pinned_info = serializers.SerializerMethodField()
-    can_pin = serializers.SerializerMethodField()
+    #is_pinned = serializers.ReadOnlyField()
+    #pinned_info = serializers.SerializerMethodField()
+    #can_pin = serializers.SerializerMethodField()
 
     class Meta:
         model = Post
@@ -60,7 +60,6 @@ class PostDetailSerializer(serializers.ModelSerializer):
             'id', 'title', 'slug', 'content', 'image', 'category',
             'category_info', 'author', 'author_info', 'status',
             'created_at', 'updated_at', 'views_count', 'comments_count',
-            'is_pinned', 'pinned_info', 'can_pin'
         ]
         read_only_fields = ['slug', 'author', 'views_count']
         
