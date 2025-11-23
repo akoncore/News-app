@@ -19,7 +19,7 @@ class CommentSerializer(ModelSerializer):
         model = Comment
         fields = [
             'id', 'content', 'author', 'author_info', 'parent',
-            'is_active', 'replies_count', 'is_reply',
+            'is_active','replise_count', 'is_reply',
             'created_at', 'updated_at'
         ]
         read_only_fields = ['authoor','is_active']
@@ -43,10 +43,22 @@ class CommentCreateSerializer(ModelSerializer):
         
     
     def validate_post(self,value):
-        if Post.objects.filter(id = value.id,status = 'published').exists():
+        if not Post.objects.filter(id = value.id).exists():
             raise ValidationError(
                 'Post not found'
             )
+        return value
+    
+    def validate_parent(self, value):
+        if value:
+            # Получаем пост из валидированных данных или из initial_data
+            post_data = self.initial_data.get('post')
+            if post_data:
+                # Сравниваем ID поста родительского комментария с переданным ID поста
+                if value.post.id != int(post_data):
+                    raise ValidationError(
+                        'Parent comment must belong to the same post.'
+                    )
         return value
     
     def create(self, validated_data):

@@ -79,3 +79,4 @@ coverage
 .vscode
 celerybeat-schedule
 celerybeat-schedule-wal
+News-app.txt/

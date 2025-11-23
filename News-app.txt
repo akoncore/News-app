@@ -1,0 +1,37 @@
+1.TrendingAnalytics (күнделікті тренд есеп)
+class TrendingAnalytics(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    score = models.FloatField()  
+    date = models.DateField()
+
+
+Trending score → views, likes, comments негізінде есептеледі.
+
+AuditLog (барлық өзгерістерді жазып отыру)
+
+Бұл кәсіптік деңгейдің маңызды жүйесі.
+Постқа кім өзгеріс енгізгенін сақтап отырады.
+
+
+2.Главный бетте озгерис болган посттар туралы малимет
+class AuditLog(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    action = models.CharField(max_length=100)
+    before_data = models.JSONField(null=True, blank=True)
+    after_data = models.JSONField(null=True, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+📌 Кәсіптік ортада кім не өзгерткенін білу — міндет.
+
+Kaz / Ru / Eng тілдеріңіз болса — міндетті.
+
+class PostTranslation(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name="translations")
+    language = models.CharField(max_length=10)
+    title = models.CharField(max_length=255)
+    content = models.TextField()
+
+
+📌 Көптілді news-портал → кәсіби деңгей.

@@ -82,7 +82,7 @@ def post_comments(request,post_id):
     
     serializer = CommentDetailSerializer(comments,many=True,context = {'request':request})
     
-    return Response(
+    return Response({
         'post': {
             'id':post.id,
             'title':post.title,
@@ -90,7 +90,7 @@ def post_comments(request,post_id):
         },
         'comments':serializer.data,
         'comments_count':post.comments.filter(is_active = True).count()
-    )
+    })
     
 
 @api_view(['GET'])
@@ -108,5 +108,5 @@ def comment_replies(request,comment_id):
     return Response({
         'parent_comment':CommentSerializer(parent_comment,context = {'request':request}),
         'replies':serializer.data,
-        'replies_count':replies.count()
+        'replise_count':replies.count()
     })
